@@ -20,6 +20,6 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
 # List of absolute paths to libraries that should be bundled with the plugin
 set(dart_tinydtls_libs_bundled_libraries
-  ""
+  "${CMAKE_CURRENT_SOURCE_DIR}/../native/lib/linux_x64/libtinydtls.so"
   PARENT_SCOPE
 )

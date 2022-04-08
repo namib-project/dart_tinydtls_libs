@@ -1,8 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:dart_tinydtls/dart_tinydtls.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:dart_tinydtls_libs/dart_tinydtls_libs.dart';
+
+final random = Random();
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +24,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+
+  int _responseCounter = 0;
+
+  String? _response = "No Response";
+
+  bool _sending = false;
 
   @override
   void initState() {
@@ -46,6 +59,50 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  // FIXME(JKRhb): After multiple exchanges tinyDTLS encounters some errors.
+  //               This example should therefore only be seen as a proof of
+  //               concept for now, but fixed in later versions.
+  void _sendRequest() async {
+    setState(() {
+      _sending = true;
+    });
+
+    const address = "::1";
+    final port = random.nextInt(1 << 16);
+
+    final server = await DtlsServer.bind(InternetAddress.anyIPv6, port,
+        keyStore: {"Client_identity": "secretPSK"});
+    server.listen((connection) {
+      connection.listen((event) {
+        setState(() {
+          _responseCounter++;
+        });
+        final response =
+            "${utf8.decode(event.data)} Response $_responseCounter";
+        connection.send(utf8.encode(response));
+      });
+    });
+    final client = await DtlsClient.bind(InternetAddress.anyIPv6, 0);
+
+    final pskCredentials = PskCredentials("Client_identity", "secretPSK");
+
+    final connection = await client.connect(InternetAddress(address), port,
+        pskCredentials: pskCredentials, eventListener: (event) {
+      if (event == DtlsEvent.dtlsEventCloseNotify) {
+        client.close();
+      }
+    });
+    connection
+      ..listen((event) {
+        server.close();
+        setState(() {
+          _response = utf8.decode(event.data);
+        });
+      })
+      ..send(utf8.encode('Hello World'));
+    _sending = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,8 +111,13 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text('Running on: $_platformVersion\n'
+              'Request counter: $_responseCounter\n'
+              'Response: $_response'),
         ),
+        floatingActionButton: IconButton(
+            onPressed: !_sending ? _sendRequest : null,
+            icon: const Icon(Icons.send)),
       ),
     );
   }
