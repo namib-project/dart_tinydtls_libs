@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  dart_tinydtls:
+    dependency: "direct main"
+    description:
+      name: dart_tinydtls
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.0"
   dart_tinydtls_libs:
     dependency: "direct main"
     description:
@@ -64,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  ffi:
+    dependency: transitive
+    description:
+      name: ffi
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   flutter:
     dependency: "direct main"
     description: flutter
