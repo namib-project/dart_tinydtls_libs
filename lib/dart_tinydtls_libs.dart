@@ -1,13 +1,11 @@
+// Copyright 2022 The NAMIB Project Developers. All rights reserved.
+// See the README as well as the LICENSE file for more information.
+//
+// SPDX-License-Identifier: EPL-1.0 OR BSD-3-CLAUSE
 
-import 'dart:async';
-
-import 'package:flutter/services.dart';
-
-class DartTinydtlsLibs {
-  static const MethodChannel _channel = MethodChannel('dart_tinydtls_libs');
-
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-}
+/// Flutter plugin providing tinyDTLS binaries for adding DTLS support to
+/// Flutter apps.
+///
+/// In order to actually use tinyDTLS with Flutter, you need to also import
+/// the [dart_tinydtls](https://pub.dev/packages/dart_tinydtls) Dart package.
+/// There you can also find usage instructions and examples.
