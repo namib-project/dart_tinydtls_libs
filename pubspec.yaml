@@ -1,6 +1,6 @@
 name: dart_tinydtls_libs
 description: Provides tinyDTLS binaries for adding DTLS support to Flutter apps.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/namib-project/dart_tinydtls_libs
 
 environment:
