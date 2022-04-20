@@ -11,7 +11,7 @@ binaries with Flutter apps which can be used by the
 This library contains only pre-compiled dynamic libraries which can be used on Linux,
 Android, and Windows.
 More information on how to use this library can be found in the
-[dart_tinydtls documentation]([dart_tinydtls](https://pub.dev/packages/dart_tinydtls)).
+[dart_tinydtls documentation](https://pub.dev/documentation/dart_tinydtls/latest/).
 
 ## Installation
 
