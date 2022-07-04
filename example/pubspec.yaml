@@ -12,7 +12,10 @@ dependencies:
     path: ../
 
   cupertino_icons: ^1.0.2
-  dart_tinydtls: ^0.5.0
+  dart_tinydtls:
+    git:
+      url: https://github.com/namib-project/dart_tinydtls.git
+      ref: windows-filename
 
 dev_dependencies:
   flutter_test:
