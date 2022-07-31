@@ -15,7 +15,7 @@ dependencies:
   dart_tinydtls:
     git:
       url: https://github.com/namib-project/dart_tinydtls.git
-      ref: windows-filename
+      ref: regenerate-bindings
 
 dev_dependencies:
   flutter_test:
