@@ -26,3 +26,7 @@ flutter:
         pluginClass: DartTinydtlsLibsPlugin
       windows:
         pluginClass: DartTinydtlsLibsPlugin
+      macos:
+        ffiPlugin: true
+      ios:
+        ffiPlugin: true
