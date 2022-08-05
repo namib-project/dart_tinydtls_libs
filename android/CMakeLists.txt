@@ -10,7 +10,7 @@ configure_file(../third_party/tinydtls/dtls_config.h.cmake.in ${CMAKE_CURRENT_SO
 add_library(tinydtls SHARED)
 
 target_include_directories(tinydtls PUBLIC ../third_party/tinydtls)
-target_compile_definitions(tinydtls PUBLIC DTLSv12 WITH_SHA256 SHA2_USE_INTTYPES_H DTLS_CHECK_CONTENTTYPE)
+target_compile_definitions(tinydtls PUBLIC DTLSv12 WITH_SHA256 SHA2_USE_INTTYPES_H DTLS_CHECK_CONTENTTYPE -DDTLS_PSK_MAX_CLIENT_IDENTITY_LEN=256)
 
 target_sources(tinydtls PRIVATE
     ../third_party/tinydtls/dtls.c

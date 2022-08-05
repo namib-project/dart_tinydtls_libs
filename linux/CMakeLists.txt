@@ -42,7 +42,7 @@ add_library(tinydtls SHARED
   ../third_party/tinydtls/ecc/ecc.c)
 
 target_include_directories(tinydtls PUBLIC ../third_party/tinydtls)
-target_compile_definitions(tinydtls PUBLIC DTLSv12 WITH_SHA256 SHA2_USE_INTTYPES_H DTLS_CHECK_CONTENTTYPE)
+target_compile_definitions(tinydtls PUBLIC DTLSv12 WITH_SHA256 SHA2_USE_INTTYPES_H DTLS_CHECK_CONTENTTYPE -DDTLS_PSK_MAX_CLIENT_IDENTITY_LEN=256)
 
 set(dart_tinydtls_libs_bundled_libraries
   "plugins/${PROJECT_NAME}/libtinydtls.so"
