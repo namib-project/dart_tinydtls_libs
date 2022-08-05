@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
-  s.dependency 'Flutter'
+  s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
