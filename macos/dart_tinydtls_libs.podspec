@@ -12,7 +12,11 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
-  s.script_phase = { :name => 'Hello World', :script => 'echo "Hello World"' }
+  s.script_phase = {
+    :name => 'Hello World',
+    :script => 'echo "Hello World"',
+    :execution_position => :before_compile
+  }
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
