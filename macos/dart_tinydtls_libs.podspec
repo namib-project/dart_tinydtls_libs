@@ -12,11 +12,12 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
-  s.script_phase = {
-    :name => 'Hello World',
-    :script => 'echo "Hello World"',
-    :execution_position => :before_compile
-  }
+  s.script_phases = [
+    { :name => 'Precompile',
+      :script => 'touch ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls-config.h',
+      :execution_position => :before_compile
+    },
+  ]
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
