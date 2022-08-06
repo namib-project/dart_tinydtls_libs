@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platform = :osx, '10.11'
   s.script_phases = [
     { :name => 'Precompile',
-      :script => 'touch ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls-config.h',
+      :script => 'touch ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_config.h',
       :execution_position => :before_compile
     },
   ]
