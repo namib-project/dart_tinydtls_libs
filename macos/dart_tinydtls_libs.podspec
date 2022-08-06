@@ -9,12 +9,12 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = '../third_party/tinydtls'
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
   s.script_phases = [
     { :name => 'Precompile',
-      :script => 'touch ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_config.h',
+      :script => 'cmake -S ${PODS_TARGET_SRCROOT}/../third_party/tinydtls -B ${PODS_TARGET_SRCROOT}/../third_party/tinydtls',
       :execution_position => :before_compile
     },
   ]
