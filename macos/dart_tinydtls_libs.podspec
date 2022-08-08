@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = '../third_party/tinydtls/**/*'
   s.pod_target_xcconfig  = { 'USER_HEADER_SEARCH_PATHS' => '"${PODS_TARGET_SRCROOT}/../third_party/tinydtls"/**' }
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
