@@ -10,18 +10,19 @@ Pod::Spec.new do |s|
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.pod_target_xcconfig  = { 'USER_HEADER_SEARCH_PATHS' => '"${PODS_TARGET_SRCROOT}/../third_party/tinydtls"/**' }
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
   s.script_phases = [
     { :name => 'Precompile',
       :script => 'cmake -S ${PODS_TARGET_SRCROOT}/../third_party/tinydtls -B ${PODS_TARGET_SRCROOT}/../third_party/tinydtls',
       :execution_position => :before_compile
-    },
-    {
-      :name => 'Copy Header Files',
-      :script => 'cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/sha2/tinydtls.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/tinydtls.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_prng.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/dtls_prng.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_debug.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/dtls_debug.h',
-      :execution_position => :before_compile
     }
+    # {
+    #   :name => 'Copy Header Files',
+    #   :script => 'cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/sha2/tinydtls.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/tinydtls.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_prng.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/dtls_prng.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/dtls_debug.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/dtls_debug.h',
+    #   :execution_position => :before_compile
+    # }
   ]
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
