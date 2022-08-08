@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     },
     {
       :name => 'Copy Header Files',
-      :script => 'cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/sha2/tinydtls.h',
+      :script => 'cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/sha2/tinydtls.h && cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/tinydtls.h ${PODS_TARGET_SRCROOT}/../third_party/tinydtls/platform-specific/tinydtls.h',
       :execution_position => :before_compile
     }
   ]
