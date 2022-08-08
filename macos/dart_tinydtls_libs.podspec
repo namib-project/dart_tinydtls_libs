@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
-  s.source_files = '../third_party/tinydtls'
+  s.source_files = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
   s.script_phases = [
@@ -17,6 +17,11 @@ Pod::Spec.new do |s|
       :script => 'cmake -S ${PODS_TARGET_SRCROOT}/../third_party/tinydtls -B ${PODS_TARGET_SRCROOT}/../third_party/tinydtls',
       :execution_position => :before_compile
     },
+    {
+      :name => 'Copy Header Files',
+      :script => 'cp ../third_party/tinydtls/**/*.h ./Classes',
+      :execution_position => :before_compile
+    }
   ]
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
