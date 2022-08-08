@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME "dart_tinydtls_libs")
-project(${PROJECT_NAME} LANGUAGES CXX)
+project(${PROJECT_NAME} LANGUAGES C CXX)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # This value is used when generating builds using this plugin, so it must
 # not be changed
@@ -17,8 +18,10 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter flutter_wrapper_plugin)
 
-# List of absolute paths to libraries that should be bundled with the plugin
+include(${CMAKE_CURRENT_LIST_DIR}/../common/CMakeLists.txt)
+set(PLATFORM "windows")
+
 set(dart_tinydtls_libs_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/lib/windows_x64/libtinydtls.dll"
+  "plugins/${PROJECT_NAME}/$<CONFIG>/tinydtls.dll"
   PARENT_SCOPE
 )

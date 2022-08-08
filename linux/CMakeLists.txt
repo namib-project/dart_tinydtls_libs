@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 set(PROJECT_NAME "dart_tinydtls_libs")
-project(${PROJECT_NAME} LANGUAGES CXX)
+project(${PROJECT_NAME} LANGUAGES C CXX)
 
 # This value is used when generating builds using this plugin, so it must
 # not be changed
@@ -18,8 +18,10 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
-# List of absolute paths to libraries that should be bundled with the plugin
+include(${CMAKE_CURRENT_LIST_DIR}/../common/CMakeLists.txt)
+set(PLATFORM "posix")
+
 set(dart_tinydtls_libs_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/../native/lib/linux_x64/libtinydtls.so"
+  "plugins/${PROJECT_NAME}/libtinydtls.so"
   PARENT_SCOPE
 )

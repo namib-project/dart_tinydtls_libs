@@ -6,6 +6,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:dart_tinydtls/dart_tinydtls.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,11 @@ class _MyAppState extends State<MyApp> {
     const address = "::1";
     final port = random.nextInt(1 << 16);
 
+    final identity = Uint8List.fromList("Client_identity".codeUnits);
+    final preSharedKey = Uint8List.fromList("secretPSK".codeUnits);
+
     final server = await DtlsServer.bind(InternetAddress.anyIPv6, port,
-        keyStore: {"Client_identity": "secretPSK"});
+        pskKeyStoreCallback: ((identity) => preSharedKey));
     server.listen((connection) {
       connection.listen((event) {
         setState(() {
@@ -55,14 +59,16 @@ class _MyAppState extends State<MyApp> {
     });
     final client = await DtlsClient.bind(InternetAddress.anyIPv6, 0);
 
-    final pskCredentials = PskCredentials("Client_identity", "secretPSK");
+    final pskCredentials =
+        PskCredentials(identity: identity, preSharedKey: preSharedKey);
 
     final connection = await client.connect(InternetAddress(address), port,
-        pskCredentials: pskCredentials, eventListener: (event) {
-      if (event == DtlsEvent.dtlsEventCloseNotify) {
-        client.close();
-      }
-    });
+        pskCallback: (identity) => pskCredentials,
+        eventListener: (event) {
+          if (event.requiresClosing) {
+            client.close();
+          }
+        });
     connection
       ..listen((event) {
         server.close();
