@@ -10,12 +10,12 @@ Pod::Spec.new do |s|
   s.author           = { 'Jan Romann' => 'jan.romann@uni-bremen.de' }
   s.source           = { :path => '.' }
   s.source_files = './Classes/tinydtls/**/*'
-  s.pod_target_xcconfig  = { 'USER_HEADER_SEARCH_PATHS' => '"${PODS_TARGET_SRCROOT}/../third_party/tinydtls"/**' }
+  # s.pod_target_xcconfig  = { 'USER_HEADER_SEARCH_PATHS' => '"${PODS_TARGET_SRCROOT}/../third_party/tinydtls"/**' }
   s.dependency 'FlutterMacOS'
   s.platform = :osx, '10.11'
   s.script_phases = [
     { :name => 'Copy tinydtls files',
-      :script => 'cp ${PODS_TARGET_SRCROOT}/../third_party/tinydtls ${PODS_TARGET_SRCROOT}/Classes/tinydtls',
+      :script => 'cp -R ${PODS_TARGET_SRCROOT}/../third_party/tinydtls ${PODS_TARGET_SRCROOT}/Classes/tinydtls/',
       :execution_position => :before_compile
     },
     { :name => 'Precompile',
