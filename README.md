@@ -1,3 +1,6 @@
+[![pub package](https://img.shields.io/pub/v/dart_tinydtls_libs.svg)](https://pub.dev/packages/dart_tinydtls_libs)
+[![Build Status](https://github.com/namib-project/dart_tinydtls_libs/actions/workflows/build-status.yml/badge.svg)](https://github.com/namib-project/dart_tinydtls_libs/actions/workflows/build-status.yml)
+
 # dart_tinydtls_libs
 
 Provides tinyDTLS binaries for adding DTLS support to Flutter apps.

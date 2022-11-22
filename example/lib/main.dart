@@ -3,9 +3,11 @@
 //
 // SPDX-License-Identifier: EPL-1.0 OR BSD-3-CLAUSE
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:dart_tinydtls/dart_tinydtls.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +43,11 @@ class _MyAppState extends State<MyApp> {
     const address = "::1";
     final port = random.nextInt(1 << 16);
 
+    final identity = Uint8List.fromList("Client_identity".codeUnits);
+    final preSharedKey = Uint8List.fromList("secretPSK".codeUnits);
+
     final server = await DtlsServer.bind(InternetAddress.anyIPv6, port,
-        keyStore: {"Client_identity": "secretPSK"});
+        pskKeyStoreCallback: ((identity) => preSharedKey));
     server.listen((connection) {
       connection.listen((event) {
         setState(() {
@@ -55,23 +60,34 @@ class _MyAppState extends State<MyApp> {
     });
     final client = await DtlsClient.bind(InternetAddress.anyIPv6, 0);
 
-    final pskCredentials = PskCredentials("Client_identity", "secretPSK");
+    final pskCredentials =
+        PskCredentials(identity: identity, preSharedKey: preSharedKey);
 
-    final connection = await client.connect(InternetAddress(address), port,
-        pskCredentials: pskCredentials, eventListener: (event) {
-      if (event == DtlsEvent.dtlsEventCloseNotify) {
-        client.close();
-      }
+    try {
+      final connection = await client.connect(InternetAddress(address), port,
+          pskCallback: (identity) => pskCredentials,
+          eventListener: (event) {
+            if (event.requiresClosing) {
+              client.close();
+            }
+          });
+      connection
+        ..listen((event) {
+          server.close();
+          setState(() {
+            _response = utf8.decode(event.data);
+          });
+        })
+        ..send(utf8.encode('Hello World'));
+    } on TimeoutException catch (exception) {
+      print(exception);
+      client.close();
+      server.close();
+    }
+
+    setState(() {
+      _sending = false;
     });
-    connection
-      ..listen((event) {
-        server.close();
-        setState(() {
-          _response = utf8.decode(event.data);
-        });
-      })
-      ..send(utf8.encode('Hello World'));
-    _sending = false;
   }
 
   @override
