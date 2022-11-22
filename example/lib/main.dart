@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: EPL-1.0 OR BSD-3-CLAUSE
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -62,22 +63,31 @@ class _MyAppState extends State<MyApp> {
     final pskCredentials =
         PskCredentials(identity: identity, preSharedKey: preSharedKey);
 
-    final connection = await client.connect(InternetAddress(address), port,
-        pskCallback: (identity) => pskCredentials,
-        eventListener: (event) {
-          if (event.requiresClosing) {
-            client.close();
-          }
-        });
-    connection
-      ..listen((event) {
-        server.close();
-        setState(() {
-          _response = utf8.decode(event.data);
-        });
-      })
-      ..send(utf8.encode('Hello World'));
-    _sending = false;
+    try {
+      final connection = await client.connect(InternetAddress(address), port,
+          pskCallback: (identity) => pskCredentials,
+          eventListener: (event) {
+            if (event.requiresClosing) {
+              client.close();
+            }
+          });
+      connection
+        ..listen((event) {
+          server.close();
+          setState(() {
+            _response = utf8.decode(event.data);
+          });
+        })
+        ..send(utf8.encode('Hello World'));
+    } on TimeoutException catch (exception) {
+      print(exception);
+      client.close();
+      server.close();
+    }
+
+    setState(() {
+      _sending = false;
+    });
   }
 
   @override
